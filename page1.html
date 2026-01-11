@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page - ปัญหาเกษตรกร</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700;800&family=Kanit:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #ff3d3d;
+            --primary-orange: #ff8c42;
+            --primary-yellow: #ffd700;
+            --primary-cyan: #00f5ff;
+            --primary-purple: #a855f7;
+            --bg-dark: #000000;
+            --text-light: #ffffff;
+        }
+
+        body {
+            font-family: 'Prompt', 'Kanit', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Video Section - Full Screen */
+        .video-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            background: var(--bg-dark);
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .video-section.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-light);
+        }
+
+        .video-placeholder .play-icon {
+            width: 100px;
+            height: 100px;
+            border: 4px solid var(--primary-cyan);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .video-placeholder .play-icon::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 30px solid var(--primary-cyan);
+            border-top: 18px solid transparent;
+            border-bottom: 18px solid transparent;
+            margin-left: 8px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 245, 255, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px 10px rgba(0, 245, 255, 0.2); }
+        }
+
+        /* Video Lightning Effect - Intense */
+        .video-lightning-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 8;
+        }
+
+        .video-lightning {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+
+        /* ฟ้าแลบหลัก - รุนแรง */
+        .video-lightning.main {
+            background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.9) 0%, rgba(200, 220, 255, 0.6) 20%, transparent 60%);
+            animation: intenseLightning1 4s infinite;
+        }
+
+        /* ฟ้าแลบซ้าย */
+        .video-lightning.left {
+            background: radial-gradient(ellipse at 20% 10%, rgba(255, 255, 255, 0.8) 0%, rgba(180, 200, 255, 0.5) 25%, transparent 55%);
+            animation: intenseLightning2 5s infinite 1.5s;
+        }
+
+        /* ฟ้าแลบขวา */
+        .video-lightning.right {
+            background: radial-gradient(ellipse at 80% 15%, rgba(255, 255, 255, 0.85) 0%, rgba(190, 210, 255, 0.55) 22%, transparent 50%);
+            animation: intenseLightning3 6s infinite 3s;
+        }
+
+        /* ฟ้าแลบกลางจอ - แรงมาก */
+        .video-lightning.center {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(200, 220, 255, 0.4) 30%, transparent 60%);
+            animation: intenseLightning4 7s infinite 0.5s;
+        }
+
+        /* ฟ้าแลบเต็มจอ - flash */
+        .video-lightning.flash {
+            background: rgba(255, 255, 255, 0.5);
+            animation: fullFlash 8s infinite 2s;
+        }
+
+        @keyframes intenseLightning1 {
+            0%, 100% { opacity: 0; }
+            4% { opacity: 0; }
+            5% { opacity: 1; }
+            6% { opacity: 0.3; }
+            7% { opacity: 1; }
+            8% { opacity: 0; }
+            50% { opacity: 0; }
+            51% { opacity: 0.8; }
+            52% { opacity: 0; }
+        }
+
+        @keyframes intenseLightning2 {
+            0%, 100% { opacity: 0; }
+            15% { opacity: 0; }
+            16% { opacity: 1; }
+            17% { opacity: 0.2; }
+            18% { opacity: 0.9; }
+            19% { opacity: 0.1; }
+            20% { opacity: 0.7; }
+            21% { opacity: 0; }
+        }
+
+        @keyframes intenseLightning3 {
+            0%, 100% { opacity: 0; }
+            30% { opacity: 0; }
+            31% { opacity: 0.9; }
+            32% { opacity: 0.2; }
+            33% { opacity: 1; }
+            34% { opacity: 0; }
+            70% { opacity: 0; }
+            71% { opacity: 0.6; }
+            72% { opacity: 0; }
+        }
+
+        @keyframes intenseLightning4 {
+            0%, 100% { opacity: 0; }
+            60% { opacity: 0; }
+            61% { opacity: 0.8; }
+            62% { opacity: 0.1; }
+            63% { opacity: 0.9; }
+            64% { opacity: 0.3; }
+            65% { opacity: 0.7; }
+            66% { opacity: 0; }
+        }
+
+        @keyframes fullFlash {
+            0%, 100% { opacity: 0; }
+            45% { opacity: 0; }
+            46% { opacity: 0.6; }
+            47% { opacity: 0; }
+            48% { opacity: 0.4; }
+            49% { opacity: 0; }
+        }
+
+        /* Lightning bolt shapes */
+        .lightning-bolt {
+            position: absolute;
+            width: 3px;
+            background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(200,220,255,0.8) 50%, transparent 100%);
+            opacity: 0;
+            filter: blur(1px);
+            box-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(200,220,255,0.6);
+        }
+
+        .lightning-bolt.bolt1 {
+            height: 40%;
+            top: 0;
+            left: 30%;
+            transform: rotate(5deg);
+            animation: boltFlash1 5s infinite;
+        }
+
+        .lightning-bolt.bolt2 {
+            height: 35%;
+            top: 0;
+            left: 65%;
+            transform: rotate(-8deg);
+            animation: boltFlash2 6s infinite 2s;
+        }
+
+        .lightning-bolt.bolt3 {
+            height: 45%;
+            top: 0;
+            left: 50%;
+            transform: rotate(2deg);
+            animation: boltFlash3 7s infinite 3.5s;
+        }
+
+        @keyframes boltFlash1 {
+            0%, 100% { opacity: 0; }
+            20% { opacity: 0; }
+            21% { opacity: 1; }
+            22% { opacity: 0.3; }
+            23% { opacity: 0.9; }
+            24% { opacity: 0; }
+        }
+
+        @keyframes boltFlash2 {
+            0%, 100% { opacity: 0; }
+            40% { opacity: 0; }
+            41% { opacity: 0.8; }
+            42% { opacity: 0.2; }
+            43% { opacity: 1; }
+            44% { opacity: 0; }
+        }
+
+        @keyframes boltFlash3 {
+            0%, 100% { opacity: 0; }
+            55% { opacity: 0; }
+            56% { opacity: 1; }
+            57% { opacity: 0.4; }
+            58% { opacity: 0.8; }
+            59% { opacity: 0; }
+        }
+
+        /* Video Overlay Text */
+        .video-overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 15;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 2s ease, visibility 2s ease;
+            pointer-events: none;
+        }
+
+        .video-overlay-text.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .video-overlay-text h1 {
+            font-family: 'Kanit', sans-serif;
+            font-size: clamp(2rem, 6vw, 5rem);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 
+                0 0 30px rgba(0, 0, 0, 0.8),
+                0 0 60px rgba(0, 0, 0, 0.6),
+                0 4px 20px rgba(0, 0, 0, 0.9);
+            letter-spacing: 5px;
+            animation: textFloat 4s ease-in-out infinite;
+        }
+
+        .video-overlay-text h1 span {
+            display: block;
+            font-size: clamp(1rem, 2.5vw, 2rem);
+            font-weight: 300;
+            letter-spacing: 10px;
+            margin-top: 15px;
+            opacity: 0.7;
+            animation: textFloat 4s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Dark Overlay for better text visibility */
+        .video-dark-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 100%);
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .video-dark-overlay.visible {
+            opacity: 1;
+        }
+
+        /* Floating Words Section */
+        .floating-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
+            background: var(--bg-dark);
+            overflow: hidden;
+        }
+
+        .floating-section.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Lightning Effect for Floating Section */
+        .lightning-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .lightning-flash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 30% 10%, rgba(255, 255, 255, 0.15) 0%, transparent 80%);
+            opacity: 0;
+            animation: lightning1 12s infinite;
+        }
+
+        .lightning-flash:nth-child(2) {
+            background: radial-gradient(ellipse at 70% 20%, rgba(200, 220, 255, 0.12) 0%, transparent 60%);
+            animation: lightning2 15s infinite 4s;
+        }
+
+        .lightning-flash:nth-child(3) {
+            background: radial-gradient(ellipse at 50% 5%, rgba(180, 200, 255, 0.1) 0%, transparent 50%);
+            animation: lightning3 18s infinite 8s;
+        }
+
+        @keyframes lightning1 {
+            0%, 92%, 94%, 96%, 100% { opacity: 0; }
+            93%, 95% { opacity: 1; }
+        }
+
+        @keyframes lightning2 {
+            0%, 88%, 90%, 100% { opacity: 0; }
+            89% { opacity: 0.8; }
+        }
+
+        @keyframes lightning3 {
+            0%, 85%, 87%, 89%, 100% { opacity: 0; }
+            86%, 88% { opacity: 0.6; }
+        }
+
+        /* Particle Background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-cyan);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-particle 15s infinite linear;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Grid Lines Background */
+        .grid-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        /* Floating Words */
+        .floating-words-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+        }
+
+        .floating-word {
+            position: absolute;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            cursor: pointer;
+            padding: 20px 40px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 20px currentColor;
+            animation-duration: 6s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+
+        .floating-word::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+            border: 2px solid currentColor;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .floating-word:hover {
+            transform: scale(1.15) !important;
+            z-index: 100;
+        }
+
+        .floating-word:hover::before {
+            opacity: 1;
+            box-shadow: 0 0 40px currentColor, inset 0 0 40px rgba(255,255,255,0.1);
+        }
+
+        /* Individual word styles */
+        .word-1 {
+            color: var(--primary-red);
+            top: 15%;
+            left: 10%;
+            animation-name: float1;
+            background: linear-gradient(135deg, rgba(255, 61, 61, 0.15), transparent);
+        }
+
+        .word-2 {
+            color: var(--primary-orange);
+            top: 25%;
+            right: 15%;
+            animation-name: float2;
+            background: linear-gradient(135deg, rgba(255, 140, 66, 0.15), transparent);
+        }
+
+        .word-3 {
+            color: var(--primary-yellow);
+            bottom: 30%;
+            left: 20%;
+            animation-name: float3;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), transparent);
+        }
+
+        .word-4 {
+            color: var(--primary-cyan);
+            bottom: 20%;
+            right: 10%;
+            animation-name: float4;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), transparent);
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: translate(0, 0) rotate(-2deg); }
+            25% { transform: translate(30px, 20px) rotate(2deg); }
+            50% { transform: translate(-20px, 40px) rotate(-1deg); }
+            75% { transform: translate(40px, -10px) rotate(3deg); }
+        }
+
+        @keyframes float2 {
+            0%, 100% { transform: translate(0, 0) rotate(2deg); }
+            25% { transform: translate(-40px, 30px) rotate(-2deg); }
+            50% { transform: translate(20px, -20px) rotate(1deg); }
+            75% { transform: translate(-30px, -30px) rotate(-3deg); }
+        }
+
+        @keyframes float3 {
+            0%, 100% { transform: translate(0, 0) rotate(1deg); }
+            25% { transform: translate(50px, -30px) rotate(-2deg); }
+            50% { transform: translate(-30px, -10px) rotate(2deg); }
+            75% { transform: translate(20px, 30px) rotate(-1deg); }
+        }
+
+        @keyframes float4 {
+            0%, 100% { transform: translate(0, 0) rotate(-1deg); }
+            25% { transform: translate(-20px, -40px) rotate(2deg); }
+            50% { transform: translate(40px, 20px) rotate(-2deg); }
+            75% { transform: translate(-40px, 10px) rotate(1deg); }
+        }
+
+        /* Center Title */
+        .center-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .center-title h2 {
+            font-family: 'Kanit', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0px;
+            text-transform: uppercase;
+            animation: glow-text 3s ease-in-out infinite;
+        }
+
+        @keyframes glow-text {
+            0%, 100% { text-shadow: 0 0 10px rgba(168, 85, 247, 0.5); }
+            50% { text-shadow: 0 0 30px rgba(168, 85, 247, 0.8), 0 0 60px rgba(168, 85, 247, 0.4); }
+        }
+
+        /* Infographic Section */
+        .infographic-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.95);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .infographic-section.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .infographic-container {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .info-card {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            background: linear-gradient(145deg, rgba(20, 20, 40, 0.9), rgba(10, 10, 30, 0.95));
+            border-radius: 30px;
+            padding: 50px 40px;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-card:nth-child(1) { animation-delay: 0.2s; }
+        .info-card:nth-child(2) { animation-delay: 0.4s; }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
+        }
+
+        .info-card .icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            margin-bottom: 25px;
+        }
+
+        .info-card.haew .icon {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 66, 0.2));
+            border: 2px solid var(--primary-yellow);
+        }
+
+        .info-card.goat .icon {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(168, 85, 247, 0.2));
+            border: 2px solid var(--primary-cyan);
+        }
+
+        .info-card h3 {
+            font-family: 'Kanit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--primary-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .info-card.haew h3 {
+            background: linear-gradient(135deg, var(--primary-yellow), var(--primary-orange));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .info-card p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .stat-highlight {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-red), var(--primary-orange));
+            padding: 5px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin: 10px 0;
+            animation: stat-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes stat-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 61, 61, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(255, 61, 61, 0.7); }
+        }
+
+        .problem-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .problem-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.75);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .problem-list li::before {
+            content: '⚠';
+            position: absolute;
+            left: 0;
+            color: var(--primary-red);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: var(--text-light);
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary-cyan);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.3);
+        }
+
+        .back-btn::before {
+            content: '←';
+            font-size: 1.2rem;
+        }
+
+        /* Skip Button */
+        .skip-btn {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Prompt', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .skip-btn:hover {
+            background: rgba(0, 0, 0, 0.7);
+            border-color: var(--primary-cyan);
+            color: var(--primary-cyan);
+        }
+
+        /* Audio Control Button */
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-light);
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .audio-control:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+            border-color: var(--primary-cyan);
+        }
+
+        .audio-control.active {
+            display: flex;
+        }
+
+        .audio-control.muted {
+            color: var(--primary-red);
+            border-color: var(--primary-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .floating-word {
+                font-size: 1.2rem;
+                padding: 15px 25px;
+            }
+
+            .word-1 { top: 10%; left: 5%; }
+            .word-2 { top: 25%; right: 5%; }
+            .word-3 { bottom: 35%; left: 5%; }
+            .word-4 { bottom: 15%; right: 5%; }
+
+            .info-card {
+                padding: 30px 25px;
+            }
+
+            .info-card h3 {
+                font-size: 1.8rem;
+            }
+
+            .infographic-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .audio-control {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .video-overlay-text h1 {
+                letter-spacing: 2px;
+            }
+
+            .video-overlay-text h1 span {
+                letter-spacing: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Section -->
+    <section class="video-section" id="videoSection">
+        <div class="video-container">
+            <!-- Intense Lightning Effect on Video -->
+            <div class="video-lightning-overlay">
+                <div class="video-lightning main"></div>
+                <div class="video-lightning left"></div>
+                <div class="video-lightning right"></div>
+                <div class="video-lightning center"></div>
+                <div class="video-lightning flash"></div>
+                <!-- Lightning bolts -->
+                <div class="lightning-bolt bolt1"></div>
+                <div class="lightning-bolt bolt2"></div>
+                <div class="lightning-bolt bolt3"></div>
+            </div>
+            
+            <!-- Dark overlay for text visibility -->
+            <div class="video-dark-overlay" id="videoDarkOverlay"></div>
+            
+            <!-- Overlay Text -->
+            <div class="video-overlay-text" id="videoOverlayText">
+                <h1>
+                    พายุชีวิต
+                    <span>ของเกษตรกร</span>
+                </h1>
+            </div>
+            
+            <!-- Video -->
+            <video id="mainVideo" autoplay muted playsinline>
+                <source src="sea.mp4" type="video/mp4">
+            </video>
+            
+            <!-- Placeholder ถ้าไม่มีวิดีโอ -->
+            <div class="video-placeholder" id="videoPlaceholder" style="display: none;">
+                <div class="play-icon"></div>
+                <p>กำลังโหลดวิดีโอ...</p>
+                <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.6;">คลิก Skip เพื่อข้ามไปดูเนื้อหา</p>
+            </div>
+        </div>
+        <button class="skip-btn" onclick="skipVideo()">Skip →</button>
+    </section>
+
+    <!-- Floating Words Section -->
+    <section class="floating-section" id="floatingSection">
+        <div class="grid-bg"></div>
+        
+        <!-- Lightning Effect -->
+        <div class="lightning-overlay">
+            <div class="lightning-flash"></div>
+            <div class="lightning-flash"></div>
+            <div class="lightning-flash"></div>
+        </div>
+        
+        <div class="particles" id="particles"></div>
+        
+        <div class="floating-words-container">
+            <div class="floating-word word-1" onclick="showInfograpnic()">
+                ขายไม่ได้
+            </div>
+            <div class="floating-word word-2" onclick="showInfograpnic()">
+                พึ่งพาคนกลาง
+            </div>
+            <div class="floating-word word-3" onclick="showInfograpnic()">
+                ต้นทุนสูง
+            </div>
+            <div class="floating-word word-4" onclick="showInfograpnic()">
+                คนไม่เชื่อมั่น
+            </div>
+            
+            <div class="center-title">
+                <h2>คลิกเพื่อดูรายละเอียด</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Infographic Section -->
+    <section class="infographic-section" id="infographicSection">
+        <button class="back-btn" onclick="hideInfograpnic()">กลับ</button>
+        
+        <div class="infographic-container">
+            <!-- แห้ว Card -->
+            <div class="info-card haew">
+                <div class="icon">🥔</div>
+                <h3>แห้ว</h3>
+                <p>ผลผลิตแห้วส่วนใหญ่ไม่ได้ถูกบริโภคในพื้นที่</p>
+                <div class="stat-highlight">บริโภคในพื้นที่เพียง 5–10%</div>
+                <p style="margin-top: 15px; font-size: 1rem; opacity: 0.7;">
+                    ทำให้เกษตรกรต้องพึ่งพาตลาดภายนอก และมีอำนาจต่อรองราคาต่ำ
+                </p>
+            </div>
+
+            <!-- แพะ Card -->
+            <div class="info-card goat">
+                <div class="icon">🐐</div>
+                <h3>แพะ</h3>
+                <p>ปัญหาที่เกษตรกรผู้เลี้ยงแพะต้องเผชิญ:</p>
+                <ul class="problem-list">
+                    <li>ขาดทักษะผู้ประกอบการ</li>
+                    <li>ปัญหาเรื่องกลิ่น</li>
+                    <li>ขาดมาตรฐานการผลิต</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Control Button -->
+    <button class="audio-control" id="audioControl">🔊</button>
+
+    <!-- Audio Element - เสียง sound2.mp3 สำหรับหน้าวิดีโอ -->
+    <audio id="videoAudio" preload="auto">
+        <source src="song2.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Audio Element - เสียง song1.mp3 สำหรับหน้า floating -->
+    <audio id="bgAudio" loop preload="auto">
+        <source src="song1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // สร้าง Particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                
+                // Random colors
+                const colors = ['#00f5ff', '#a855f7', '#ff3d3d', '#ffd700'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Audio Elements
+        const videoAudio = document.getElementById('videoAudio');
+        const bgAudio = document.getElementById('bgAudio');
+        const audioControl = document.getElementById('audioControl');
+        let audioPlaying = false;
+        let videoAudioPlaying = false;
+
+        // เริ่มเล่นเสียง sound2.mp3 ตอนเริ่มต้น
+        function startVideoAudio() {
+            videoAudio.volume = 0.6;
+            videoAudio.play().then(() => {
+                videoAudioPlaying = true;
+            }).catch(e => {
+                console.log('Video audio autoplay blocked.');
+                videoAudioPlaying = false;
+            });
+        }
+
+        // หยุดเสียง sound2.mp3
+        function stopVideoAudio() {
+            videoAudio.pause();
+            videoAudio.currentTime = 0;
+            videoAudioPlaying = false;
+        }
+
+        // เริ่มเล่นเสียง song1.mp3 สำหรับหน้า floating
+        function startBgAudio() {
+            bgAudio.volume = 0.5;
+            bgAudio.play().then(() => {
+                audioPlaying = true;
+                updateAudioButton();
+            }).catch(e => {
+                console.log('Audio autoplay blocked. Click audio button to enable.');
+                audioPlaying = false;
+                updateAudioButton();
+            });
+        }
+
+        // Toggle Audio
+        function toggleAudio() {
+            if (audioPlaying) {
+                bgAudio.pause();
+                audioPlaying = false;
+            } else {
+                bgAudio.play();
+                audioPlaying = true;
+            }
+            updateAudioButton();
+        }
+
+        // Update Audio Button Icon
+        function updateAudioButton() {
+            if (audioPlaying) {
+                audioControl.textContent = '🔊';
+                audioControl.classList.remove('muted');
+            } else {
+                audioControl.textContent = '🔇';
+                audioControl.classList.add('muted');
+            }
+        }
+
+        audioControl.addEventListener('click', toggleAudio);
+
+        // Video Event Handlers
+        const video = document.getElementById('mainVideo');
+        const videoSection = document.getElementById('videoSection');
+        const floatingSection = document.getElementById('floatingSection');
+        const videoPlaceholder = document.getElementById('videoPlaceholder');
+        const videoOverlayText = document.getElementById('videoOverlayText');
+        const videoDarkOverlay = document.getElementById('videoDarkOverlay');
+        
+        let textShown = false;
+
+        // ตรวจสอบว่าวิดีโอโหลดได้หรือไม่
+        video.addEventListener('error', function() {
+            video.style.display = 'none';
+            videoPlaceholder.style.display = 'flex';
+        });
+
+        // เมื่อวิดีโอพร้อมเล่น - เริ่มเล่นเสียง sound2.mp3
+        video.addEventListener('canplay', function() {
+            startVideoAudio();
+        });
+
+        // ตรวจสอบเวลาวิดีโอเพื่อแสดงข้อความตอนครึ่งทาง
+        video.addEventListener('timeupdate', function() {
+            const halfwayPoint = video.duration / 2;
+            
+            if (video.currentTime >= halfwayPoint && !textShown) {
+                // แสดงข้อความเมื่อเล่นถึงครึ่งทาง
+                videoDarkOverlay.classList.add('visible');
+                videoOverlayText.classList.add('visible');
+                textShown = true;
+            }
+        });
+
+        // เมื่อวิดีโอเล่นจบ
+        video.addEventListener('ended', function() {
+            stopVideoAudio(); // หยุดเสียง sound2.mp3
+            transitionToFloating();
+        });
+
+        // ฟังก์ชันข้ามวิดีโอ
+        function skipVideo() {
+            video.pause();
+            stopVideoAudio(); // หยุดเสียง sound2.mp3 เมื่อกด skip
+            transitionToFloating();
+        }
+
+        // ฟังก์ชัน transition ไปหน้า floating words
+        function transitionToFloating() {
+            videoSection.classList.add('hidden');
+            floatingSection.classList.add('active');
+            audioControl.classList.add('active');
+            createParticles();
+            
+            // เริ่มเล่นเสียง song1.mp3 อัตโนมัติ
+            setTimeout(() => {
+                startBgAudio();
+            }, 500);
+        }
+
+        // แสดง Infographic
+        function showInfograpnic() {
+            document.getElementById('infographicSection').classList.add('active');
+        }
+
+        // ซ่อน Infographic
+        function hideInfograpnic() {
+            document.getElementById('infographicSection').classList.remove('active');
+        }
+
+        // ถ้าวิดีโอไม่มี source ให้แสดง placeholder
+        if (!video.querySelector('source').src || video.querySelector('source').src.includes('YOUR_VIDEO_URL_HERE')) {
+            video.style.display = 'none';
+            videoPlaceholder.style.display = 'flex';
+            
+            // Auto skip หลังจาก 3 วินาที ถ้าไม่มีวิดีโอ
+            setTimeout(() => {
+                transitionToFloating();
+            }, 3000);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideInfograpnic();
+            }
+            if (e.key === ' ' || e.key === 'Enter') {
+                if (!floatingSection.classList.contains('active')) {
+                    skipVideo();
+                }
+            }
+            // กด M เพื่อ mute/unmute
+            if (e.key === 'm' || e.key === 'M') {
+                if (audioControl.classList.contains('active')) {
+                    toggleAudio();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
